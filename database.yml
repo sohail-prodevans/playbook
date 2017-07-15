@@ -2,6 +2,11 @@
 - hosts: all
   remote_user: chanchal
   tasks:
+  - name: Install Mariadb database and dependencies
+    yum: name={{item}} state=latest
+    with_items: 
+    - mariadb-server
+    - MySQL-python
   - name: Install Mariadb database
     yum: name=mariadb-server 
   - name: Create a database  
