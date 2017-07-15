@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  remote_user: chanchal
   tasks:
   - name: Install Mariadb database
     yum: name=mariadb-server 
