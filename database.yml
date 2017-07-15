@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - name: Install Mariadb database
+    yum: name=mariadb-server 
+  - name: Create a database  
+    mysql_db:  name=cmsproject state=present
+  - name: Create user jhon to manage cmsproject databse
+    mysql_user: name=jhon password=12345 priv='cmsproject.*:ALL,GRANT' state=present
+  
