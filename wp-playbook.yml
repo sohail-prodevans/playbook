@@ -1,0 +1,5 @@
+---
+- hosts: servera 
+  roles:
+    - wp-packages 
+    - wp-config
