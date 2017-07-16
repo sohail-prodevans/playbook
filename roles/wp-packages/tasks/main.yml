@@ -22,4 +22,7 @@
     name="{{ wp_mysql_user }}"
     password="{{ wp_mysql_password }}"
     priv="*.*:ALL"
-
+- name: start httpd
+  service: name=httpd state=started
+- name: Allow http access
+  firewalld: service=http immediate=true permanent=true state=enabled
