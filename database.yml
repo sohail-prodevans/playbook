@@ -6,7 +6,7 @@
     yum: name={{item}} state=latest
     with_items: 
     - mariadb-server
-#    - MySQL-python
+    - MySQL-python
   - name: Install Mariadb database
     yum: name=mariadb-server 
   - name: Create a database  
