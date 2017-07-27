@@ -1,0 +1,7 @@
+- name: test raw module
+  hosts: 52.15.231.26
+  tasks:
+    - name: run ipconfig
+      win_command: ipconfig
+      register: ipconfig
+    - debug: var=ipconfig

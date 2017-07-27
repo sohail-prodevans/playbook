@@ -1,0 +1,6 @@
+- hosts: 52.15.231.26
+  tasks:
+    - name: Remove Appx packages (and their hindering file assocations)
+      win_shell: |
+        Get-AppxPackage -name "Microsoft.ZuneMusic" | Remove-AppxPackage
+        Get-AppxPackage -name "Microsoft.ZuneVideo" | Remove-AppxPackage

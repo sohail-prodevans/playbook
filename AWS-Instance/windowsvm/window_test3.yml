@@ -1,0 +1,8 @@
+- name: infrastructure setup
+  hosts: 52.15.231.26
+  tasks:
+  - name: Create a file
+    win_file:
+      path: C:\Users\foo.conf
+      state: file
+

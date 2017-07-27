@@ -1,0 +1,16 @@
+---
+- hosts: 192.168.1.80 
+  connection: local
+  vars:
+    cli:
+      host: ""
+      username: ""
+      password: "inventum"
+  tasks:
+  - name: run show version
+    ios_command:
+      commands: "show version"
+      provider: ""
+      register: show_version
+  - name: print the show version output
+    debug: var=show_version

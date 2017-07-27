@@ -1,0 +1,6 @@
+---
+- name: install tomcat role
+  hosts: 54.149.144.250
+  become: yes
+  roles: 
+  - roles/tomcat/tomcat

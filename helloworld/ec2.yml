@@ -1,0 +1,19 @@
+- name: Configuring the EC2 Instance
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  tasks:
+   - ec2:
+      key_name: LDAP-testing
+      instance_type: t2.micro
+      image: ami-0932686c
+      wait: yes
+      wait_timeout: 500
+      count: 1
+      instance_tags:
+         db: postgres
+      monitoring: yes
+      vpc_subnet_id: subnet-59891f30
+      region: us-east-2
+      assign_public_ip: yes

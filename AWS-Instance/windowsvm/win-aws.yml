@@ -1,0 +1,53 @@
+- name: infrastructure setup
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    target_aws_region: us-east-2
+  vars_files:
+    - secret.yml
+  tasks:
+  - name: find current Windows AMI in this region
+    ec2_ami_find:
+      aws_access_key: 'AKIAJNQNHYEX3JVND6IA'
+      aws_secret_key: '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'
+      region: "{{ target_aws_region }}"
+      platform: windows
+      virtualization_type: hvm
+      owner: amazon
+      name: Windows_Server-2012-R2_RTM-English-64Bit-Base-*
+      no_result_action: fail
+      sort: name
+      sort_order: descending
+    register: found_amis
+  - set_fact:
+      win_ami_id: "{{ (found_amis.results | first).ami_id  }}"
+  - name: ensure instances are running
+    ec2:
+      aws_access_key: 'AKIAJNQNHYEX3JVND6IA'
+      aws_secret_key: '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'
+      region: "{{ target_aws_region }}"
+      image: "{{ win_ami_id }}"
+      vpc_subnet_id: 'subnet-e37ced8a'
+      group_id: 'sg-a0c2b9c9'
+      assign_public_ip: yes
+      instance_type: t2.micro
+      wait: yes
+      wait_timeout: 500
+      exact_count: 1
+      count_tag:
+        Name: GAF-Demo-WIN-VM
+      instance_tags:
+        Name: GAF-Demo-WIN-VM
+      user_data: "{{ lookup('template', 'userdata.txt.j2') }}"
+    register: ec2_result
+#  - debug: var=ec2_result
+  - copy: dest=/var/tmp/instance_ip content="{{ec2_result.tagged_instances}}" force=yes
+  - name: Optional-wait for VM to come UP
+    wait_for:
+      port: 5986
+      host: 
+      timeout: 151
+    ignore_errors: yes
+
+#  - copy: dest=/var/tmp/instance_ip content="{{ec2_result.tagged_instances.public_ip}}" force=yes
