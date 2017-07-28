@@ -9,8 +9,8 @@
   tasks:
   - name: find current Windows AMI in this region
     ec2_ami_find:
-      aws_access_key: 'AKIAJNQNHYEX3JVND6IA'
-      aws_secret_key: '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'
+      aws_access_key: ''
+      aws_secret_key: ''
       region: "{{ target_aws_region }}"
       platform: windows
       virtualization_type: hvm
@@ -24,8 +24,8 @@
       win_ami_id: "{{ (found_amis.results | first).ami_id  }}"
   - name: ensure instances are running
     ec2:
-      aws_access_key: 'AKIAJNQNHYEX3JVND6IA'
-      aws_secret_key: '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'
+      aws_access_key: 'A A'
+      aws_secret_key: ''
       region: "{{ target_aws_region }}"
       image: "{{ win_ami_id }}"
       vpc_subnet_id: 'subnet-e37ced8a'
